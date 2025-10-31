@@ -11,7 +11,7 @@
 package routing_v1
 
 import (
-	v1 "go/types/secure/v1"
+	v1 "github.com/tinywideclouds/gen-platform/go/types/secure/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -140,7 +140,7 @@ const file_src_types_routing_v1_queue_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12A\n" +
 	"\benvelope\x18\x02 \x01(\v2%.src.types.secure.v1.SecureEnvelopePbR\benvelope\"X\n" +
 	"\x13QueuedMessageListPb\x12A\n" +
-	"\bmessages\x18\x01 \x03(\v2%.src.types.routing.v1.QueuedMessagePbR\bmessagesB Z\x1ego/types/routing/v1;routing_v1b\x06proto3"
+	"\bmessages\x18\x01 \x03(\v2%.src.types.routing.v1.QueuedMessagePbR\bmessagesBGZEgithub.com/tinywideclouds/gen-platform/go/types/routing/v1;routing_v1b\x06proto3"
 
 var (
 	file_src_types_routing_v1_queue_proto_rawDescOnce sync.Once

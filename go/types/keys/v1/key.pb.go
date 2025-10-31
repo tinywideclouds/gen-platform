@@ -87,7 +87,7 @@ const file_src_types_key_v1_key_proto_rawDesc = "" +
 	"\x1asrc/types/key/v1/key.proto\x12\x11src.types.keys.v1\"@\n" +
 	"\fPublicKeysPb\x12\x17\n" +
 	"\aenc_key\x18\x01 \x01(\fR\x06encKey\x12\x17\n" +
-	"\asig_key\x18\x02 \x01(\fR\x06sigKeyB\x1aZ\x18go/types/keys/v1;keys_v1b\x06proto3"
+	"\asig_key\x18\x02 \x01(\fR\x06sigKeyBAZ?github.com/tinywideclouds/gen-platform/go/types/keys/v1;keys_v1b\x06proto3"
 
 var (
 	file_src_types_key_v1_key_proto_rawDescOnce sync.Once

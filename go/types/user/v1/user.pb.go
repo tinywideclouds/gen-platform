@@ -105,7 +105,7 @@ const file_src_types_user_v1_user_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05alias\x18\x02 \x01(\tR\x05alias\x12\x12\n" +
 	"\x04name\x18\x03 \x01(\tR\x04name\x12\x14\n" +
-	"\x05email\x18\x04 \x01(\tR\x05emailB\x1aZ\x18go/types/user/v1;user_v1b\x06proto3"
+	"\x05email\x18\x04 \x01(\tR\x05emailBAZ?github.com/tinywideclouds/gen-platform/go/types/user/v1;user_v1b\x06proto3"
 
 var (
 	file_src_types_user_v1_user_proto_rawDescOnce sync.Once

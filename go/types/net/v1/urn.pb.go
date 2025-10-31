@@ -91,7 +91,7 @@ const file_src_types_net_v1_urn_proto_rawDesc = "" +
 	"\n" +
 	"entityType\x18\x02 \x01(\tR\n" +
 	"entityType\x12\x1a\n" +
-	"\bentityId\x18\x03 \x01(\tR\bentityIdB\x18Z\x16go/types/net/v1;net_v1b\x06proto3"
+	"\bentityId\x18\x03 \x01(\tR\bentityIdB?Z=github.com/tinywideclouds/gen-platform/go/types/net/v1;net_v1b\x06proto3"
 
 var (
 	file_src_types_net_v1_urn_proto_rawDescOnce sync.Once

@@ -161,7 +161,7 @@ const file_src_types_secure_v1_envelope_proto_rawDesc = "" +
 	"\x17encrypted_symmetric_key\x18\x03 \x01(\fR\x15encryptedSymmetricKey\x12\x1c\n" +
 	"\tsignature\x18\x04 \x01(\fR\tsignature\"[\n" +
 	"\x14SecureEnvelopeListPb\x12C\n" +
-	"\tenvelopes\x18\x01 \x03(\v2%.src.types.secure.v1.SecureEnvelopePbR\tenvelopesB\x1eZ\x1cgo/types/secure/v1;secure_v1b\x06proto3"
+	"\tenvelopes\x18\x01 \x03(\v2%.src.types.secure.v1.SecureEnvelopePbR\tenvelopesBEZCgithub.com/tinywideclouds/gen-platform/go/types/secure/v1;secure_v1b\x06proto3"
 
 var (
 	file_src_types_secure_v1_envelope_proto_rawDescOnce sync.Once
