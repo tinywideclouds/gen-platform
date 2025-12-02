@@ -33,7 +33,9 @@ type UserPb struct {
 	// A real name field
 	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	// The contact's primary email address.
-	Email         string `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty"`
+	Email string `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty"`
+	// Using 'optional' allows you to distinguish between a missing URL and an empty string.
+	ProfileUrl    *string `protobuf:"bytes,5,opt,name=profile_url,json=profileUrl,proto3,oneof" json:"profile_url,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -96,16 +98,26 @@ func (x *UserPb) GetEmail() string {
 	return ""
 }
 
+func (x *UserPb) GetProfileUrl() string {
+	if x != nil && x.ProfileUrl != nil {
+		return *x.ProfileUrl
+	}
+	return ""
+}
+
 var File_src_types_user_v1_user_proto protoreflect.FileDescriptor
 
 const file_src_types_user_v1_user_proto_rawDesc = "" +
 	"\n" +
-	"\x1csrc/types/user/v1/user.proto\x12\x11src.types.user.v1\"X\n" +
+	"\x1csrc/types/user/v1/user.proto\x12\x11src.types.user.v1\"\x8e\x01\n" +
 	"\x06UserPb\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05alias\x18\x02 \x01(\tR\x05alias\x12\x12\n" +
 	"\x04name\x18\x03 \x01(\tR\x04name\x12\x14\n" +
-	"\x05email\x18\x04 \x01(\tR\x05emailBAZ?github.com/tinywideclouds/gen-platform/go/types/user/v1;user_v1b\x06proto3"
+	"\x05email\x18\x04 \x01(\tR\x05email\x12$\n" +
+	"\vprofile_url\x18\x05 \x01(\tH\x00R\n" +
+	"profileUrl\x88\x01\x01B\x0e\n" +
+	"\f_profile_urlBAZ?github.com/tinywideclouds/gen-platform/go/types/user/v1;user_v1b\x06proto3"
 
 var (
 	file_src_types_user_v1_user_proto_rawDescOnce sync.Once
@@ -136,6 +148,7 @@ func file_src_types_user_v1_user_proto_init() {
 	if File_src_types_user_v1_user_proto != nil {
 		return
 	}
+	file_src_types_user_v1_user_proto_msgTypes[0].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

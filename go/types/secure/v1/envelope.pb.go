@@ -41,7 +41,9 @@ type SecureEnvelopePb struct {
 	// The signature of the encrypted_data, created with the
 	// sender's *signing key*. This is mission-critical for the
 	// recipient to verify the sender's authenticity.
-	Signature     []byte `protobuf:"bytes,4,opt,name=signature,proto3" json:"signature,omitempty"`
+	Signature []byte `protobuf:"bytes,4,opt,name=signature,proto3" json:"signature,omitempty"`
+	// If true, a Router will DROP this message if the user is offline or after a given time it will vanish
+	IsEphemeral   bool `protobuf:"varint,5,opt,name=is_ephemeral,json=isEphemeral,proto3" json:"is_ephemeral,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -104,6 +106,13 @@ func (x *SecureEnvelopePb) GetSignature() []byte {
 	return nil
 }
 
+func (x *SecureEnvelopePb) GetIsEphemeral() bool {
+	if x != nil {
+		return x.IsEphemeral
+	}
+	return false
+}
+
 // A wrapper message for a list of secure envelopes.
 // This is what the client will receive when it polls for messages.
 type SecureEnvelopeListPb struct {
@@ -154,12 +163,13 @@ var File_src_types_secure_v1_envelope_proto protoreflect.FileDescriptor
 
 const file_src_types_secure_v1_envelope_proto_rawDesc = "" +
 	"\n" +
-	"\"src/types/secure/v1/envelope.proto\x12\x13src.types.secure.v1\"\xb2\x01\n" +
+	"\"src/types/secure/v1/envelope.proto\x12\x13src.types.secure.v1\"\xd5\x01\n" +
 	"\x10SecureEnvelopePb\x12!\n" +
 	"\frecipient_id\x18\x01 \x01(\tR\vrecipientId\x12%\n" +
 	"\x0eencrypted_data\x18\x02 \x01(\fR\rencryptedData\x126\n" +
 	"\x17encrypted_symmetric_key\x18\x03 \x01(\fR\x15encryptedSymmetricKey\x12\x1c\n" +
-	"\tsignature\x18\x04 \x01(\fR\tsignature\"[\n" +
+	"\tsignature\x18\x04 \x01(\fR\tsignature\x12!\n" +
+	"\fis_ephemeral\x18\x05 \x01(\bR\visEphemeral\"[\n" +
 	"\x14SecureEnvelopeListPb\x12C\n" +
 	"\tenvelopes\x18\x01 \x03(\v2%.src.types.secure.v1.SecureEnvelopePbR\tenvelopesBEZCgithub.com/tinywideclouds/gen-platform/go/types/secure/v1;secure_v1b\x06proto3"
 
