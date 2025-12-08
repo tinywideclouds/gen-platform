@@ -85,8 +85,7 @@ func (x *QueuedMessagePb) GetEnvelope() *v1.SecureEnvelopePb {
 	return nil
 }
 
-// QueuedMessageListPb is the payload returned by the 'GET /api/messages'
-// endpoint. It's just a list of the wrapper messages.
+// QueuedMessageListPb is just a list of the wrapper messages.
 type QueuedMessageListPb struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Messages      []*QueuedMessagePb     `protobuf:"bytes,1,rep,name=messages,proto3" json:"messages,omitempty"`
