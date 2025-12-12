@@ -84,7 +84,7 @@ func (x *DeviceTokenPb) GetPlatform() string {
 type NotificationRequestPb struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The URN of the end-user this notification is for.
-	// e.g., "urn:sm:user:user-bob"
+	// e.g., "urn:contacts:user:user-bob"
 	RecipientId string `protobuf:"bytes,1,opt,name=recipient_id,json=recipientId,proto3" json:"recipient_id,omitempty"`
 	// A list of all device tokens associated with the recipient.
 	Tokens  []*DeviceTokenPb               `protobuf:"bytes,2,rep,name=tokens,proto3" json:"tokens,omitempty"`
