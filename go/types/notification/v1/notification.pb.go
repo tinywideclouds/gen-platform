@@ -23,31 +23,31 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// DeviceTokenPb represents a single push notification token for a user's device.
-type DeviceTokenPb struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// The platform-specific token string from the device.
-	Token string `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
-	// The platform identifier, e.g., "ios", "android".
-	Platform      string `protobuf:"bytes,2,opt,name=platform,proto3" json:"platform,omitempty"`
+// WebPushSubscriptionPb models the standard W3C Push Subscription structure.
+// This handles the "huge JSON" explicitly instead of stringifying it.
+type WebPushSubscriptionPb struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Endpoint      string                 `protobuf:"bytes,1,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
+	P256Dh        string                 `protobuf:"bytes,2,opt,name=p256dh,proto3" json:"p256dh,omitempty"`
+	Auth          string                 `protobuf:"bytes,3,opt,name=auth,proto3" json:"auth,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DeviceTokenPb) Reset() {
-	*x = DeviceTokenPb{}
+func (x *WebPushSubscriptionPb) Reset() {
+	*x = WebPushSubscriptionPb{}
 	mi := &file_src_types_notification_v1_notification_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DeviceTokenPb) String() string {
+func (x *WebPushSubscriptionPb) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DeviceTokenPb) ProtoMessage() {}
+func (*WebPushSubscriptionPb) ProtoMessage() {}
 
-func (x *DeviceTokenPb) ProtoReflect() protoreflect.Message {
+func (x *WebPushSubscriptionPb) ProtoReflect() protoreflect.Message {
 	mi := &file_src_types_notification_v1_notification_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -59,39 +59,39 @@ func (x *DeviceTokenPb) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DeviceTokenPb.ProtoReflect.Descriptor instead.
-func (*DeviceTokenPb) Descriptor() ([]byte, []int) {
+// Deprecated: Use WebPushSubscriptionPb.ProtoReflect.Descriptor instead.
+func (*WebPushSubscriptionPb) Descriptor() ([]byte, []int) {
 	return file_src_types_notification_v1_notification_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *DeviceTokenPb) GetToken() string {
+func (x *WebPushSubscriptionPb) GetEndpoint() string {
 	if x != nil {
-		return x.Token
+		return x.Endpoint
 	}
 	return ""
 }
 
-func (x *DeviceTokenPb) GetPlatform() string {
+func (x *WebPushSubscriptionPb) GetP256Dh() string {
 	if x != nil {
-		return x.Platform
+		return x.P256Dh
 	}
 	return ""
 }
 
-// NotificationRequestPb is the message published by the routing-service and
-// consumed by the notification-service. It contains all information required
-// to send a push notification.
+func (x *WebPushSubscriptionPb) GetAuth() string {
+	if x != nil {
+		return x.Auth
+	}
+	return ""
+}
+
+// 2. The Service-to-Service Request
+// No tokens here. The service looks them up.
 type NotificationRequestPb struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// The URN of the end-user this notification is for.
-	// e.g., "urn:contacts:user:user-bob"
-	RecipientId string `protobuf:"bytes,1,opt,name=recipient_id,json=recipientId,proto3" json:"recipient_id,omitempty"`
-	// A list of all device tokens associated with the recipient.
-	Tokens  []*DeviceTokenPb               `protobuf:"bytes,2,rep,name=tokens,proto3" json:"tokens,omitempty"`
-	Content *NotificationRequestPb_Content `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
-	// The non-visible, structured data payload to be delivered to the client application.
-	// This allows the client app to take action, e.g., fetching a specific message.
-	DataPayload   map[string]string `protobuf:"bytes,4,rep,name=data_payload,json=dataPayload,proto3" json:"data_payload,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	state         protoimpl.MessageState         `protogen:"open.v1"`
+	RecipientId   string                         `protobuf:"bytes,1,opt,name=recipient_id,json=recipientId,proto3" json:"recipient_id,omitempty"` // e.g. "urn:user:123"
+	Content       *NotificationRequestPb_Content `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
+	DataPayload   map[string]string              `protobuf:"bytes,3,rep,name=data_payload,json=dataPayload,proto3" json:"data_payload,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -133,13 +133,6 @@ func (x *NotificationRequestPb) GetRecipientId() string {
 	return ""
 }
 
-func (x *NotificationRequestPb) GetTokens() []*DeviceTokenPb {
-	if x != nil {
-		return x.Tokens
-	}
-	return nil
-}
-
 func (x *NotificationRequestPb) GetContent() *NotificationRequestPb_Content {
 	if x != nil {
 		return x.Content
@@ -154,7 +147,61 @@ func (x *NotificationRequestPb) GetDataPayload() map[string]string {
 	return nil
 }
 
-// The user-facing content of the notification.
+// DeviceTokenPb represents a single push notification token for a user's device.
+type DeviceTokenPb struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The platform-specific token string from the device.
+	Token string `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	// The platform identifier, e.g., "ios", "android".
+	Platform      string `protobuf:"bytes,2,opt,name=platform,proto3" json:"platform,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeviceTokenPb) Reset() {
+	*x = DeviceTokenPb{}
+	mi := &file_src_types_notification_v1_notification_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeviceTokenPb) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeviceTokenPb) ProtoMessage() {}
+
+func (x *DeviceTokenPb) ProtoReflect() protoreflect.Message {
+	mi := &file_src_types_notification_v1_notification_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeviceTokenPb.ProtoReflect.Descriptor instead.
+func (*DeviceTokenPb) Descriptor() ([]byte, []int) {
+	return file_src_types_notification_v1_notification_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *DeviceTokenPb) GetToken() string {
+	if x != nil {
+		return x.Token
+	}
+	return ""
+}
+
+func (x *DeviceTokenPb) GetPlatform() string {
+	if x != nil {
+		return x.Platform
+	}
+	return ""
+}
+
 type NotificationRequestPb_Content struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
@@ -166,7 +213,7 @@ type NotificationRequestPb_Content struct {
 
 func (x *NotificationRequestPb_Content) Reset() {
 	*x = NotificationRequestPb_Content{}
-	mi := &file_src_types_notification_v1_notification_proto_msgTypes[2]
+	mi := &file_src_types_notification_v1_notification_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -178,7 +225,7 @@ func (x *NotificationRequestPb_Content) String() string {
 func (*NotificationRequestPb_Content) ProtoMessage() {}
 
 func (x *NotificationRequestPb_Content) ProtoReflect() protoreflect.Message {
-	mi := &file_src_types_notification_v1_notification_proto_msgTypes[2]
+	mi := &file_src_types_notification_v1_notification_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -219,22 +266,25 @@ var File_src_types_notification_v1_notification_proto protoreflect.FileDescripto
 
 const file_src_types_notification_v1_notification_proto_rawDesc = "" +
 	"\n" +
-	",src/types/notification/v1/notification.proto\x12\x19src.types.notification.v1\"A\n" +
-	"\rDeviceTokenPb\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token\x12\x1a\n" +
-	"\bplatform\x18\x02 \x01(\tR\bplatform\"\xc1\x03\n" +
+	",src/types/notification/v1/notification.proto\x12\x19src.types.notification.v1\"_\n" +
+	"\x15WebPushSubscriptionPb\x12\x1a\n" +
+	"\bendpoint\x18\x01 \x01(\tR\bendpoint\x12\x16\n" +
+	"\x06p256dh\x18\x02 \x01(\tR\x06p256dh\x12\x12\n" +
+	"\x04auth\x18\x03 \x01(\tR\x04auth\"\xff\x02\n" +
 	"\x15NotificationRequestPb\x12!\n" +
-	"\frecipient_id\x18\x01 \x01(\tR\vrecipientId\x12@\n" +
-	"\x06tokens\x18\x02 \x03(\v2(.src.types.notification.v1.DeviceTokenPbR\x06tokens\x12R\n" +
-	"\acontent\x18\x03 \x01(\v28.src.types.notification.v1.NotificationRequestPb.ContentR\acontent\x12d\n" +
-	"\fdata_payload\x18\x04 \x03(\v2A.src.types.notification.v1.NotificationRequestPb.DataPayloadEntryR\vdataPayload\x1aI\n" +
+	"\frecipient_id\x18\x01 \x01(\tR\vrecipientId\x12R\n" +
+	"\acontent\x18\x02 \x01(\v28.src.types.notification.v1.NotificationRequestPb.ContentR\acontent\x12d\n" +
+	"\fdata_payload\x18\x03 \x03(\v2A.src.types.notification.v1.NotificationRequestPb.DataPayloadEntryR\vdataPayload\x1aI\n" +
 	"\aContent\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12\x12\n" +
 	"\x04body\x18\x02 \x01(\tR\x04body\x12\x14\n" +
 	"\x05sound\x18\x03 \x01(\tR\x05sound\x1a>\n" +
 	"\x10DataPayloadEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01BQZOgithub.com/tinywideclouds/gen-platform/go/types/notification/v1;notification_v1b\x06proto3"
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"A\n" +
+	"\rDeviceTokenPb\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\x12\x1a\n" +
+	"\bplatform\x18\x02 \x01(\tR\bplatformBQZOgithub.com/tinywideclouds/gen-platform/go/types/notification/v1;notification_v1b\x06proto3"
 
 var (
 	file_src_types_notification_v1_notification_proto_rawDescOnce sync.Once
@@ -248,22 +298,22 @@ func file_src_types_notification_v1_notification_proto_rawDescGZIP() []byte {
 	return file_src_types_notification_v1_notification_proto_rawDescData
 }
 
-var file_src_types_notification_v1_notification_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_src_types_notification_v1_notification_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_src_types_notification_v1_notification_proto_goTypes = []any{
-	(*DeviceTokenPb)(nil),                 // 0: src.types.notification.v1.DeviceTokenPb
+	(*WebPushSubscriptionPb)(nil),         // 0: src.types.notification.v1.WebPushSubscriptionPb
 	(*NotificationRequestPb)(nil),         // 1: src.types.notification.v1.NotificationRequestPb
-	(*NotificationRequestPb_Content)(nil), // 2: src.types.notification.v1.NotificationRequestPb.Content
-	nil,                                   // 3: src.types.notification.v1.NotificationRequestPb.DataPayloadEntry
+	(*DeviceTokenPb)(nil),                 // 2: src.types.notification.v1.DeviceTokenPb
+	(*NotificationRequestPb_Content)(nil), // 3: src.types.notification.v1.NotificationRequestPb.Content
+	nil,                                   // 4: src.types.notification.v1.NotificationRequestPb.DataPayloadEntry
 }
 var file_src_types_notification_v1_notification_proto_depIdxs = []int32{
-	0, // 0: src.types.notification.v1.NotificationRequestPb.tokens:type_name -> src.types.notification.v1.DeviceTokenPb
-	2, // 1: src.types.notification.v1.NotificationRequestPb.content:type_name -> src.types.notification.v1.NotificationRequestPb.Content
-	3, // 2: src.types.notification.v1.NotificationRequestPb.data_payload:type_name -> src.types.notification.v1.NotificationRequestPb.DataPayloadEntry
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	3, // 0: src.types.notification.v1.NotificationRequestPb.content:type_name -> src.types.notification.v1.NotificationRequestPb.Content
+	4, // 1: src.types.notification.v1.NotificationRequestPb.data_payload:type_name -> src.types.notification.v1.NotificationRequestPb.DataPayloadEntry
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_src_types_notification_v1_notification_proto_init() }
@@ -277,7 +327,7 @@ func file_src_types_notification_v1_notification_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_src_types_notification_v1_notification_proto_rawDesc), len(file_src_types_notification_v1_notification_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
