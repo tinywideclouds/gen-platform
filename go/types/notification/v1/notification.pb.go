@@ -28,8 +28,8 @@ const (
 type WebPushSubscriptionPb struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Endpoint      string                 `protobuf:"bytes,1,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
-	P256Dh        string                 `protobuf:"bytes,2,opt,name=p256dh,proto3" json:"p256dh,omitempty"`
-	Auth          string                 `protobuf:"bytes,3,opt,name=auth,proto3" json:"auth,omitempty"`
+	P256Dh        []byte                 `protobuf:"bytes,2,opt,name=p256dh,proto3" json:"p256dh,omitempty"`
+	Auth          []byte                 `protobuf:"bytes,3,opt,name=auth,proto3" json:"auth,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -71,18 +71,18 @@ func (x *WebPushSubscriptionPb) GetEndpoint() string {
 	return ""
 }
 
-func (x *WebPushSubscriptionPb) GetP256Dh() string {
+func (x *WebPushSubscriptionPb) GetP256Dh() []byte {
 	if x != nil {
 		return x.P256Dh
 	}
-	return ""
+	return nil
 }
 
-func (x *WebPushSubscriptionPb) GetAuth() string {
+func (x *WebPushSubscriptionPb) GetAuth() []byte {
 	if x != nil {
 		return x.Auth
 	}
-	return ""
+	return nil
 }
 
 // 2. The Service-to-Service Request
@@ -269,8 +269,8 @@ const file_src_types_notification_v1_notification_proto_rawDesc = "" +
 	",src/types/notification/v1/notification.proto\x12\x19src.types.notification.v1\"_\n" +
 	"\x15WebPushSubscriptionPb\x12\x1a\n" +
 	"\bendpoint\x18\x01 \x01(\tR\bendpoint\x12\x16\n" +
-	"\x06p256dh\x18\x02 \x01(\tR\x06p256dh\x12\x12\n" +
-	"\x04auth\x18\x03 \x01(\tR\x04auth\"\xff\x02\n" +
+	"\x06p256dh\x18\x02 \x01(\fR\x06p256dh\x12\x12\n" +
+	"\x04auth\x18\x03 \x01(\fR\x04auth\"\xff\x02\n" +
 	"\x15NotificationRequestPb\x12!\n" +
 	"\frecipient_id\x18\x01 \x01(\tR\vrecipientId\x12R\n" +
 	"\acontent\x18\x02 \x01(\v28.src.types.notification.v1.NotificationRequestPb.ContentR\acontent\x12d\n" +
